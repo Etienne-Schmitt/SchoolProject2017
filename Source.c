@@ -86,6 +86,30 @@ int *sendOutput()
         {
             perror("send error");
             exit(1);
+
+            ba2str( &rem_addr.rc_bdaddr, receive_addr );
+            fprintf(stderr, "Connexion recu de : %s\n", receive_addr);
+
+            status = send(client, buffer, sizeof(buffer), 0);
+            if (status < 0)
+            {
+                perror("Sending error");
+                exit(1);
+            }
+/*
+            while (1)
+            {            
+                sem_wait(&sem);
+                status = write(sock, "Test !", 6);
+
+                if (status < 0)
+                {
+                    perror("Sending error");
+                    exit(1);
+                }
+            }
+            */
+>>>>>>> c7d2ef1a532b99353a8890fb53aae38581413118
         }
 
         printf("sendOutput() : buffer = %s\n", buffer);
