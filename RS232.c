@@ -10,9 +10,9 @@ int *readInput()
         // Code de Steve ici :
 
 
+        // Fin code de Steve
 
-
-        // Générateur de string aléatoire 
+        // Générateur de string aléatoire
         // (temporaire pour test sans le code de steve)
 
         srand(time(NULL));

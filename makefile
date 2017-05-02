@@ -5,7 +5,7 @@ LFLAGS =
 LIBS = -lbluetooth -lpthread
 SRCS = Source.c RS232.c
 OBJS = $(SRCS:.c=.o)
-MAIN = Server
+MAIN = rfcomm-server
 
 all:    $(MAIN)
 
