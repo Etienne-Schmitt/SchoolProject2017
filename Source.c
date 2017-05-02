@@ -60,7 +60,7 @@ int *sendOutput()
             ba2str( &rem_addr.rc_bdaddr, receive_addr );
             fprintf(stderr, "Connexion recu de : %s\n", receive_addr);
 
-            status = write(client, "Test !", 6);
+            status = send(client, buffer, sizeof(buffer), 0);
             if (status < 0)
             {
                 perror("Sending error");
