@@ -4,7 +4,6 @@
 
 int *readInput()
 {
-    int i;
     while (1) //Thread 1
     {
         memset(buffer, 0, sizeof(buffer));
@@ -17,7 +16,7 @@ int *readInput()
         // (temporaire pour test sans le code de steve)
 
         srand(time(NULL));
-        for (i = 0; i < 8; ++i)
+        for (int i = 0; i < 8; ++i)
         {
             buffer[i] = '0' + rand() % 72;
         }

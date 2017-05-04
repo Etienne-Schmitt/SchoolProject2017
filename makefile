@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -w
+CFLAGS = -w -std=c99
 INCLUDES =
 LFLAGS =
 LIBS = -lbluetooth -lpthread
