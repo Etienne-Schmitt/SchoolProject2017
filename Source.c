@@ -81,10 +81,9 @@ int *sendOutput()
     while (1) //Thread 2
     {
         sem_wait(&sem);
-		
-	
-		ba2str( &rem_addr.rc_bdaddr, receive_addr );
-		fprintf(stderr, "Connexion recu de : %s\n", receive_addr);
+
+	ba2str( &rem_addr.rc_bdaddr, receive_addr );
+	fprintf(stderr, "Connexion recu de : %s\n", receive_addr);
 
         if (send(client, &buffer, sizeof(buffer), 0) < 0)
         {
