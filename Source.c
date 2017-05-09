@@ -88,7 +88,7 @@ int *sendOutput()
 
 	ba2str( &rem_addr.rc_bdaddr, receive_addr );
 
-        if (send(client, (void) const buffer, (size_t) sizeof(buffer), 0) < 0)
+        if (send(client, buffer, (size_t) sizeof(buffer), 0) < 0)
         {
             perror("send error");
             exit(1);
