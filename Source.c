@@ -85,7 +85,7 @@ int *sendOutput()
     {
         sem_wait(&sem);
 
-        if (send(client, buffer, (size_t)sizeof(buffer), 0) < 0)
+        if (write(client, buffer, (size_t)sizeof(buffer)) < 0)
 
         {
             perror("send error");
