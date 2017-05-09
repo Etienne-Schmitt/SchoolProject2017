@@ -16,7 +16,6 @@ sem_t sem;
 struct sockaddr_rc loc_addr = {0}, rem_addr = {0};
 char buffer[32] = {0}, receive_addr[8] = {0};
 int sock, client, status;
-socklen_t opt = sizeof(rem_addr);
 
 int *sendOutput();
 
@@ -30,11 +29,7 @@ void main()
         perror("Thread:Reception error");
         exit(1);
     }
-
-    loc_addr.rc_family = AF_BLUETOOTH;
-    loc_addr.rc_bdaddr = *BDADDR_ANY;
-    loc_addr.rc_channel = (uint8_t)1;
-
+    
     sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
     if (sock < 0)
     {
@@ -42,13 +37,19 @@ void main()
         exit(1);
     }
 
+    memset(&loc_addr, 0, sizeof(struct sockaddr_rc));
+    loc_addr.rc_family = AF_BLUETOOTH;
+    loc_addr.rc_bdaddr = *BDADDR_ANY;
+    loc_addr.rc_channel = (uint8_t)1;
+
+
     if (bind(sock, (struct sockaddr *)&loc_addr, sizeof(loc_addr)) < 0)
     {
         perror("bind error");
         exit(1);
     }
 
-    if (listen(sock, 10) < 0)
+    if (listen(sock, 1) < 0)
     {
         perror("listen error");
         exit(1);
@@ -56,7 +57,7 @@ void main()
 
     while (1)
     {
-        client = accept(sock, (struct sockaddr *)&rem_addr, &opt);
+        client = accept(sock, (struct sockaddr *) &rem_addr, sizeof(rem_addr););
         if (client < 0)
         {
             perror("accept error");
@@ -87,7 +88,7 @@ int *sendOutput()
 
         ba2str(&rem_addr.rc_bdaddr, receive_addr);
 
-        if (send(client, buffer, (size_t)sizeof(buffer), 0) < 0)
+        if (write(client, buffer, (size_t)sizeof(buffer)) < 0)
         {
             perror("send error");
             exit(1);
