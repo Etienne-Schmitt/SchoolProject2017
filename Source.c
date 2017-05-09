@@ -62,9 +62,9 @@ void main()
             perror("accept error");
             exit(1);
         }
-        
-        fprintf(stderr, "Connexion recu de : %s\n", receive_addr);
+        fprintf("client = %s\n", client);
 
+        fprintf("Connexion recu de : %s\n", receive_addr);
 
         if (pthread_create(&Transmission, NULL, sendOutput, NULL) < 0)
         {
@@ -84,17 +84,16 @@ int *sendOutput()
     while (1) //Thread 2
     {
         sem_wait(&sem);
-	printf("sendOutput(Sans connexion) : buffer = %s\n", buffer);
 
-	ba2str( &rem_addr.rc_bdaddr, receive_addr );
+        ba2str(&rem_addr.rc_bdaddr, receive_addr);
 
-        if (send(client, buffer, (size_t) sizeof(buffer), 0) < 0)
+        if (send(client, buffer, (size_t)sizeof(buffer), 0) < 0)
         {
             perror("send error");
             exit(1);
         }
 
-	printf("sendOutput(Avec connexion) : buffer = %s\n", buffer);
+        printf("sendOutput() : buffer = %s\n", buffer);
     }
 
     pthread_exit(NULL);
