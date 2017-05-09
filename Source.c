@@ -58,13 +58,14 @@ void main()
 
     while (1)
     {
+        fprintf("Avant accept() : client = %d\n", client);
         client = accept(sock, (struct sockaddr *) &rem_addr, &size_rem_addr);
         if (client < 0)
         {
             perror("accept error");
             exit(1);
         }
-        fprintf("client = %s\n", client);
+        fprintf("Après accept() : client = %d\n", client);
 
         fprintf("Connexion recu de : %s\n", receive_addr);
 
@@ -85,11 +86,12 @@ int *sendOutput()
 {
     while (1) //Thread 2
     {
+        fprintf("sendOutput() : client = %d\n", client);
         sem_wait(&sem);
 
         ba2str(&rem_addr.rc_bdaddr, receive_addr);
 
-        if (write(client, buffer, (size_t)sizeof(buffer)) < 0)
+        if (write(client, buffer, (size_t) sizeof(buffer)) < 0)
         {
             perror("send error");
             exit(1);
