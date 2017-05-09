@@ -57,7 +57,7 @@ void main()
 
     while (1)
     {
-        client = accept(sock, (struct sockaddr *) &rem_addr, sizeof(rem_addr););
+        client = accept(sock, (struct sockaddr *) &rem_addr, sizeof(rem_addr));
         if (client < 0)
         {
             perror("accept error");
