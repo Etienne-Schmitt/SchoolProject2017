@@ -62,6 +62,9 @@ void main()
             perror("accept error");
             exit(1);
         }
+        
+        fprintf(stderr, "Connexion recu de : %s\n", receive_addr);
+
 
         if (pthread_create(&Transmission, NULL, sendOutput, NULL) < 0)
         {
@@ -82,10 +85,10 @@ int *sendOutput()
     {
         sem_wait(&sem);
 
-	ba2str( &rem_addr.rc_bdaddr, receive_addr );
-	fprintf(stderr, "Connexion recu de : %s\n", receive_addr);
 
-        if (send(client, buffer, (size_t) sizeof(buffer), 0) < 0)
+	ba2str( &rem_addr.rc_bdaddr, receive_addr );
+
+        if (send(client, (void) const buffer, (size_t) sizeof(buffer), 0) < 0)
         {
             perror("send error");
             exit(1);
