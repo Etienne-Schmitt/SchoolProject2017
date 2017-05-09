@@ -16,7 +16,7 @@ sem_t sem;
 struct sockaddr_rc loc_addr = {0}, rem_addr = {0};
 char buffer[32] = {0}, receive_addr[8] = {0};
 int sock, client, status;
-socklen_t size_rem_addr = sizeof(rem_addr);
+socklen_t opt = sizeof(rem_addr);
 
 int *sendOutput();
 
@@ -30,19 +30,17 @@ void main()
         perror("Thread:Reception error");
         exit(1);
     }
-    
+
+    loc_addr.rc_family = AF_BLUETOOTH;
+    loc_addr.rc_bdaddr = *BDADDR_ANY;
+    loc_addr.rc_channel = (uint8_t)1;
+
     sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
     if (sock < 0)
     {
         perror("error socket");
         exit(1);
     }
-
-    memset(&loc_addr, 0, sizeof(struct sockaddr_rc));
-    loc_addr.rc_family = AF_BLUETOOTH;
-    loc_addr.rc_bdaddr = *BDADDR_ANY;
-    loc_addr.rc_channel = (uint8_t)1;
-
 
     if (bind(sock, (struct sockaddr *)&loc_addr, sizeof(loc_addr)) < 0)
     {
@@ -58,14 +56,15 @@ void main()
 
     while (1)
     {
-        client = accept(sock, (struct sockaddr *) &rem_addr, &size_rem_addr);
+        client = accept(sock, (struct sockaddr *)&rem_addr, &opt);
         if (client < 0)
         {
             perror("accept error");
             exit(1);
         }
 
-        fprintf("Connexion recu de : %s\n", receive_addr);
+        ba2str(&rem_addr.rc_bdaddr, receive_addr);
+        printf("Connexion recu de : %s\n", receive_addr);
 
         if (pthread_create(&Transmission, NULL, sendOutput, NULL) < 0)
         {
@@ -84,12 +83,10 @@ int *sendOutput()
 {
     while (1) //Thread 2
     {
-        fprintf("sendOutput() : client = %d\n", client);
         sem_wait(&sem);
 
-        ba2str(&rem_addr.rc_bdaddr, receive_addr);
+        if (send(client, const buffer, (size_t)sizeof(buffer), 0) < 0)
 
-        if (write(client, buffer, (size_t) sizeof(buffer)) < 0)
         {
             perror("send error");
             exit(1);
