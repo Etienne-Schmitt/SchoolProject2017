@@ -71,8 +71,6 @@ void main()
             perror("Thread:Transmission error");
             exit(1);
         }
-
-        sleep(1);
     }
 
     close(client);
@@ -84,9 +82,8 @@ int *sendOutput()
     while (1) //Thread 2
     {
         sem_wait(&sem);
-
-        if (write(client, buffer, (size_t)sizeof(buffer)) < 0)
-
+		printf("sendOutput() : client = %d\n", client);
+        if (write(client, buffer, strlen(buffer)) < 0)
         {
             perror("send error");
             exit(1);
