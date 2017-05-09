@@ -84,7 +84,7 @@ int *sendOutput()
     while (1) //Thread 2
     {
         sem_wait(&sem);
-
+	printf("sendOutput(Sans connexion) : buffer = %s\n", buffer);
 
 	ba2str( &rem_addr.rc_bdaddr, receive_addr );
 
@@ -94,7 +94,7 @@ int *sendOutput()
             exit(1);
         }
 
-        printf("sendOutput() : buffer = %s\n", buffer);
+	printf("sendOutput(Avec connexion) : buffer = %s\n", buffer);
     }
 
     pthread_exit(NULL);
