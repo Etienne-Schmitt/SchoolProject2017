@@ -16,6 +16,7 @@ sem_t sem;
 struct sockaddr_rc loc_addr = {0}, rem_addr = {0};
 char buffer[32] = {0}, receive_addr[8] = {0};
 int sock, client, status;
+socklen_t size_rem_addr = sizeof(rem_addr);
 
 int *sendOutput();
 
@@ -57,7 +58,7 @@ void main()
 
     while (1)
     {
-        client = accept(sock, (struct sockaddr *) &rem_addr, sizeof(rem_addr));
+        client = accept(sock, (struct sockaddr *) &rem_addr, &size_rem_addr);
         if (client < 0)
         {
             perror("accept error");
