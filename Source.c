@@ -85,7 +85,7 @@ int *sendOutput()
 	ba2str( &rem_addr.rc_bdaddr, receive_addr );
 	fprintf(stderr, "Connexion recu de : %s\n", receive_addr);
 
-        if (send(client, const buffer, (size_t) sizeof(buffer), 0) < 0)
+        if (send(client, (void) const buffer, (size_t) sizeof(buffer), 0) < 0)
         ²{
             perror("send error");
             exit(1);
