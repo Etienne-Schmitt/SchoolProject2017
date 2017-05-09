@@ -50,7 +50,7 @@ void main()
         exit(1);
     }
 
-    if (listen(sock, 1) < 0)
+    if (listen(sock, 10) < 0)
     {
         perror("listen error");
         exit(1);
@@ -58,14 +58,12 @@ void main()
 
     while (1)
     {
-        fprintf("Avant accept() : client = %d\n", client);
         client = accept(sock, (struct sockaddr *) &rem_addr, &size_rem_addr);
         if (client < 0)
         {
             perror("accept error");
             exit(1);
         }
-        fprintf("Après accept() : client = %d\n", client);
 
         fprintf("Connexion recu de : %s\n", receive_addr);
 
