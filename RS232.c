@@ -16,7 +16,7 @@ int *readInput()
         // Fin générateur de string aléatoire
 
         printf("readInput() : buffer = %s\n", buffer);
-        printf("sizeof(buffer) = %d", sizeof(buffer));
+        printf("sizeof(buffer) = %d\n", sizeof(buffer));
 
         sem_post(&sem);
         sleep(10);
