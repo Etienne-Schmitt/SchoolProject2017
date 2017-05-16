@@ -10,6 +10,7 @@
 
 #include "RS232.h"
 
+struct sockaddr_rc rem_addr = {0};
 pthread_mutex_t mutex;
 sem_t sem;
 char buffer[32] = {0};
@@ -21,7 +22,7 @@ void main()
 {
 
     pthread_t Reception, Transmission;
-    struct sockaddr_rc loc_addr = {0}, rem_addr = {0};
+    struct sockaddr_rc loc_addr = {0};
     char receive_addr[8] = {0};
     int client;
     socklen_t opt = sizeof(rem_addr);
@@ -64,7 +65,7 @@ int *sendOutput()
         pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
-        if (send(sock, buffer,(size_t) strlen(buffer) + 1, MSG_OOB) < 0)
+        if (sendto(sock, buffer,(size_t) strlen(buffer) + 1, MSG_OOB, (struct sockaddr *)) &rem_addr, sizeof(rem_addr) < 0)
         {
             printf("Le client n'est pas connecter !\n");
         }
