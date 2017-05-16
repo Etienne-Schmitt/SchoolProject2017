@@ -10,21 +10,24 @@
 
 #include "RS232.h"
 
-pthread_t Reception, Transmission;
 pthread_mutex_t mutex;
 sem_t sem;
-
-struct sockaddr_rc loc_addr = {0}, rem_addr = {0};
-char buffer[32] = {0}, receive_addr[8] = {0};
-int sock, client;
-socklen_t opt = sizeof(rem_addr);
+char buffer[32] = {0};
 
 int *sendOutput();
 
 void main()
 {
+
+    pthread_t Reception, Transmission;
+    struct sockaddr_rc loc_addr = {0}, rem_addr = {0};
+    char receive_addr[8] = {0};
+    int sock, client;
+    socklen_t opt = sizeof(rem_addr);
+
     printf("Starting Bluetooth Server\n");
     sem_init(&sem, 0, 0);
+    pthread_mutex_init(&mutex, NULL);
 
     pthread_create(&Reception, NULL, readInput, NULL);
 
@@ -57,14 +60,17 @@ int *sendOutput()
 {
     while (1) //Thread 2
     {
+        pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
-        if (write(sock, buffer, strlen(buffer) + 1) < 0)
+        if (send(sock, buffer,(size_t) strlen(buffer) + 1, 0) < 0)
         {
             printf("Le client n'est pas connecter !\n");
         }
 
         //printf("sendOutput() : buffer = %s\n", buffer);
+
+        pthread_mutex_unlock(&mutex);
     }
 
     pthread_exit(NULL);

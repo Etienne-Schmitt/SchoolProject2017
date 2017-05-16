@@ -9,5 +9,5 @@
 
 extern char buffer[32];
 extern sem_t sem;
-
+extern pthread_mutex_t mutex;
 int *readInput();

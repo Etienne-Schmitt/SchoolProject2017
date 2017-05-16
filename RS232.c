@@ -6,6 +6,8 @@ int *readInput()
 {
     while (1) //Thread 1
     {
+        pthread_mutex_lock(&mutex);
+
         // Générateur de string aléatoire
 
         srand(time(NULL));
@@ -19,8 +21,9 @@ int *readInput()
         //printf("readInput() : buffer = %s\n", buffer);
         printf("Entrée =%s\n", buffer);
 
-        sem_post(&sem);
         sleep(10);
+
+        pthread_mutex_unlock(&mutex);
     }
     pthread_exit(NULL);
     return 0;
