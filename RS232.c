@@ -19,7 +19,7 @@ int *readInput()
         printf("readInput() : buffer = %s\n", buffer);
 
         sem_post(&sem);
-        sleep(5);
+        sleep(10);
     }
     pthread_exit(NULL);
     return 0;
