@@ -64,7 +64,7 @@ int *sendOutput()
         pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
-        if (send(sock, buffer,(size_t) strlen(buffer) + 1, 0) < 0)
+        if (send(sock, buffer,(size_t) strlen(buffer) + 1, MSG_OOB) < 0)
         {
             printf("Le client n'est pas connecter !\n");
         }
