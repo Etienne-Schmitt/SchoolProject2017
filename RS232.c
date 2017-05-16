@@ -6,7 +6,6 @@ int *readInput()
 {
     while (1) //Thread 1
     {
-        
         // Générateur de string aléatoire
 
         srand(time(NULL));
