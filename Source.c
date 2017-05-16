@@ -61,7 +61,7 @@ int *sendOutput()
 
         if (send(sock, buffer, strlen(buffer) + 1, 0) < 0)
         {
-            printf("Le client n'est pas connecter !\n")
+            printf("Le client n'est pas connecter !\n");
         }
 
         //printf("sendOutput() : buffer = %s\n", buffer);
