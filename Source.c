@@ -34,7 +34,7 @@ void main()
 
     sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 
-    bind(sock, (struct sockaddr *)&loc_addr, sizeof(loc_addr);
+    bind(sock, (struct sockaddr *)&loc_addr, sizeof(loc_addr));
 
     listen(sock, 10);
 
