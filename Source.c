@@ -16,7 +16,7 @@ sem_t sem;
 char buffer[64] = {0};
 int sock;
 
-int *sendOutput();
+void *sendOutput();
 
 void main()
 {
@@ -58,12 +58,9 @@ void main()
     close(sock);
 }
 
-int *sendOutput()
+void *sendOutput()
 {
-    while (1) //Thread 2
-    {
         pthread_mutex_lock(&mutex);
-        sem_wait(&sem);
         connect(sock, (struct sockaddr *)&rem_addr, sizeof(rem_addr));
 
         if (send(sock, buffer,(size_t) strlen(buffer) + 1, 0) < 0)
@@ -74,8 +71,7 @@ int *sendOutput()
         //printf("sendOutput() : buffer = %s\n", buffer);
 
         pthread_mutex_unlock(&mutex);
-    }
+
 
     pthread_exit(NULL);
-    return 0;
 }

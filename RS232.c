@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-int *readInput()
+void *readInput()
 {
     while (1) //Thread 1
     {
@@ -26,5 +26,4 @@ int *readInput()
         pthread_mutex_unlock(&mutex);
     }
     pthread_exit(NULL);
-    return 0;
 }
