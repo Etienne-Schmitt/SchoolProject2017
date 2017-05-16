@@ -84,7 +84,7 @@ int *sendOutput()
     {
         sem_wait(&sem);
 		printf("sendOutput() : client = %d\n", client);
-        if (write(client, buffer, strlen(buffer)) < 0)
+        if (send(sock, buffer, strlen(buffer)+1, 0)) < 0)
         {
             perror("send error");
         }
