@@ -21,6 +21,7 @@ void *readInput()
         //printf("readInput() : buffer = %s\n", buffer);
         printf("Entrée =%s\n", buffer);
 
+        sem_post(&sem);
         sleep(10);
 
         pthread_mutex_unlock(&mutex);

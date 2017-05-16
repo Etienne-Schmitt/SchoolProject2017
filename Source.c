@@ -42,7 +42,7 @@ void main()
     bind(sock, (struct sockaddr *)&loc_addr, sizeof(loc_addr));
 
     listen(sock, 10);
-    printf("Je suis dansla boucle\n");
+
     while (1)
     {
         client = accept(sock, (struct sockaddr *)&rem_addr, &opt);
@@ -61,9 +61,9 @@ void main()
 void *sendOutput()
 {
     pthread_mutex_lock(&mutex);
-
+    sem_wait(&sem);
     printf("Je suis dans le Thread2\n");
-    connect(sock, (struct sockaddr *)&rem_addr, sizeof(rem_addr));
+    //connect(sock, (struct sockaddr *)&rem_addr, sizeof(rem_addr));
 
     if (send(sock, buffer, (size_t)strlen(buffer) + 1, 0) < 0)
     {
