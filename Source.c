@@ -86,7 +86,6 @@ int *sendOutput()
         if (write(client, buffer, strlen(buffer)) < 0)
         {
             perror("send error");
-            exit(1);
         }
 
         printf("sendOutput() : buffer = %s\n", buffer);
