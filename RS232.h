@@ -7,7 +7,7 @@
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
 
-extern char buffer[32];
+extern char buffer[64];
 extern sem_t sem;
 extern pthread_mutex_t mutex;
 int *readInput();
