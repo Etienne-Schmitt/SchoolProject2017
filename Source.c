@@ -65,7 +65,7 @@ int *sendOutput()
         pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
-        if (sendto(sock, buffer,(size_t) strlen(buffer) + 1, MSG_OOB, (struct sockaddr *)) &rem_addr, sizeof(rem_addr) < 0)
+        if (sendto(sock, buffer,(size_t) strlen(buffer) + 1, MSG_OOB, (struct sockaddr *) &rem_addr, sizeof(rem_addr) < 0)
         {
             printf("Le client n'est pas connecter !\n");
         }
