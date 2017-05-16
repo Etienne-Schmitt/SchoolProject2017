@@ -42,7 +42,7 @@ void main()
     bind(sock, (struct sockaddr *)&loc_addr, sizeof(loc_addr));
 
     listen(sock, 10);
-
+    printf("Je suis dansla boucle\n");
     while (1)
     {
         client = accept(sock, (struct sockaddr *)&rem_addr, &opt);
