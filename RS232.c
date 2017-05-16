@@ -13,7 +13,7 @@ int *readInput()
         {
             buffer[i] = '0' + rand() % 72;
         }
-        strcat(buffer, '\0')
+        strcat(buffer, '\0');
         // Fin générateur de string aléatoire
 
         printf("readInput() : buffer = %s\n", buffer);
