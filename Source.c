@@ -13,6 +13,7 @@
 pthread_mutex_t mutex;
 sem_t sem;
 char buffer[32] = {0};
+int sock;
 
 int *sendOutput();
 
@@ -22,7 +23,7 @@ void main()
     pthread_t Reception, Transmission;
     struct sockaddr_rc loc_addr = {0}, rem_addr = {0};
     char receive_addr[8] = {0};
-    int sock, client;
+    int client;
     socklen_t opt = sizeof(rem_addr);
 
     printf("Starting Bluetooth Server\n");
