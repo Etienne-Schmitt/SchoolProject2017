@@ -60,19 +60,16 @@ void main()
 
 void *sendOutput()
 {
+    while (client)
+    {
     pthread_mutex_lock(&mutex);
     sem_wait(&sem);
-    printf("Je suis dans le Thread2\n");
-    //connect(sock, (struct sockaddr *)&rem_addr, sizeof(rem_addr));
 
-    if (send(sock, buffer, (size_t)strlen(buffer) + 1, 0) < 0)
-    {
+    if (send(client, buffer, (size_t) strlen(buffer) + 1, 0) < 0)
         printf("Le client n'est pas connecter !\n");
-    }
-
-    //printf("sendOutput() : buffer = %s\n", buffer);
 
     pthread_mutex_unlock(&mutex);
 
+    }
     pthread_exit(NULL);
 }
