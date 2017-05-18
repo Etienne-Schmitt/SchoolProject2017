@@ -59,19 +59,20 @@ void *sendOutput()
 {
   
     printf("Thread envoie crée !\n");
-    while (socketClient > 0)
+    while (1)
     {
-        //pthread_mutex_lock(&mutex);
+        pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
         if ( send(socketClient, buffer, sizeof(buffer), 0) < 0 )
         {
-            printf("Le client est déconnecter !\n");
+            printf("Le client s'est déconnecter !\n");
             sleep(5);
+            pthread_mutex_unlock(&mutex);
             pthread_exit(NULL);
         }
     
-        //pthread_mutex_unlock(&mutex);
+        pthread_mutex_unlock(&mutex);
     }
     pthread_exit(NULL);
 }
