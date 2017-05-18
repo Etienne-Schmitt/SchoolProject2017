@@ -16,7 +16,7 @@ struct sockaddr_rc rem_addr = {0}, loc_addr = {0};
 pthread_mutex_t mutex;
 sem_t sem;
 char buffer[64] = {0};
-int sock, client;
+int sockfd, client;
 char rc_addr[8] = {0};
 
 socklen_t length_rem_addr = sizeof(rem_addr);
@@ -34,26 +34,26 @@ void main()
 
     pthread_create(&Reception, NULL, readInput, NULL);
 
-    sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+    sockfd = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 
     loc_addr.rc_family = AF_BLUETOOTH;
     loc_addr.rc_bdaddr = *BDADDR_ANY;
     loc_addr.rc_channel = CHANNEL;
 
-    bind(sock, (struct sockaddr *)&loc_addr, length_loc_addr);
+    bind(sockfd, (struct sockaddr *)&loc_addr, length_loc_addr);
 
-    listen(sock, CHANNEL);
+    listen(sockfd, CHANNEL);
 
     printf("Attente de client\n");
     while (1)
     {
-        client = accept(sock, (struct sockaddr *)&rem_addr, &length_rem_addr);
+        client = accept(sockfd, (struct sockaddr *)&rem_addr, &length_rem_addr);
 
         pthread_create(&Transmission, NULL, sendOutput, NULL);
     }
 
     close(client);
-    close(sock);
+    close(sockfd);
 }
 
 void *sendOutput()
