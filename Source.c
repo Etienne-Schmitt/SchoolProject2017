@@ -43,16 +43,14 @@ int main()
     listen(socketServer, 1);
 
     printf("Attente de client\n");
-    while (1)
+    while (1);
     {
-        socketClient = accept(socketServer, (struct sockaddr *)&rem_addr, &length_rem_addr);
-
+        socketClient = accept(socketServer, (struct sockaddr *)&rem_addr, &length_rem_addr)
         ba2str(&rem_addr.rc_bdaddr, rc_addr);
         printf("Connexion recu de : %s\n", rc_addr);
 
         pthread_create(&Transmission, NULL, sendOutput, NULL);
     }
-
     close(socketClient);
     close(socketServer);
     return 0;
@@ -60,7 +58,7 @@ int main()
 
 void *sendOutput()
 {
-    printf("Thread envoie cree !\n");
+    printf("Thread envoie crée !\n");
     while (socketClient > 0)
     {
         //pthread_mutex_lock(&mutex);

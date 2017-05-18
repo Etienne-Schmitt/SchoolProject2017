@@ -4,7 +4,7 @@
 
 void *readInput()
 {
-    printf("Thread reception cree !\n");
+    printf("Thread reception crée !\n");
     while (1) //Thread 1
     {
         // Générateur de string aléatoire
