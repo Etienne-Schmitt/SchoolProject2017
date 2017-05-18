@@ -47,6 +47,9 @@ void main()
     {
         client = accept(sockfd, (struct sockaddr *)&rem_addr, &length_rem_addr);
 
+        ba2str(&rem_addr.rc_bdaddr, rc_addr);
+        printf("Connexion recu de : %s\n", rc_addr);
+
         pthread_create(&Transmission, NULL, sendOutput, NULL);
     }
 
@@ -57,8 +60,6 @@ void main()
 void *sendOutput()
 {
     printf("Thread envoie cree !\n");
-    ba2str(&rem_addr.rc_bdaddr, rc_addr);
-    printf("Connexion recu de : %s\n", rc_addr);
     while (client > 0)
     {
         //pthread_mutex_lock(&mutex);
