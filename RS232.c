@@ -4,28 +4,28 @@
 
 void *readInput()
 {
-    printf("Thread reception crée !\n");
-    while (1) //Thread 1
-    {
-    	pthread_mutex_lock(&mutex);
+	printf("Thread reception crée !\n");
+	while (1) //Thread 1
+	{
+		pthread_mutex_lock(&mutex);
 
-        memset(buffer, 0, sizeof(buffer));
-        // Générateur de string aléatoire
-        srand(time(NULL));
-        for (int i = 0; i < 8; ++i)
-        {
-            buffer[i] = '0' + rand() % 72;
-        }
-        strcat(buffer, "\0");
-        // Fin générateur de string aléatoire
+		memset(buffer, 0, sizeof(buffer));
+		// Générateur de string aléatoire
+		srand(time(NULL));
+		for (int i = 0; i < 8; ++i)
+		{
+			buffer[i] = '0' + rand() % 72;
+		}
+		strcat(buffer, "\0");
+		// Fin générateur de string aléatoire
 
-        //printf("readInput() : buffer = %s\n", buffer);
-        printf("Entrée =%s\n", buffer);
+		//printf("readInput() : buffer = %s\n", buffer);
+		printf("Entrée =%s\n", buffer);
 
-        
-        pthread_mutex_unlock(&mutex);
+		sem_post(&sem);
+		pthread_mutex_unlock(&mutex);
 
-        sleep(10);
-    }
-    pthread_exit(NULL);
+		sleep(10);
+	}
+	pthread_exit(NULL);
 }
