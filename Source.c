@@ -21,10 +21,8 @@ void *sendOutput();
 
 int main(int argc , char *argv[])
 {
-
-
     sem_init(&sem, 0, 0);
-    pthread_mutex_init(&mutex, NULL);
+	pthread_mutex_init(&mutex, NULL);
 
     printf("Démarrage Server Bluetooth\n");
 
@@ -47,6 +45,7 @@ int main(int argc , char *argv[])
         ba2str(&clientAddr.rc_bdaddr, addrDevice);
         printf("Connexion recu de : %s\n", addrDevice);
 
+
         pthread_create(&Transmission, NULL, sendOutput, NULL);
     }
     printf("Connexion refusée, arret en cours...\n");
@@ -62,7 +61,7 @@ void *sendOutput()
     while (1)
     {
         pthread_mutex_lock(&mutex);
-        sem_wait(&sem);
+        sem_wait (&sem)
 
         if ( send(socketClient, buffer, sizeof(buffer), 0) < 0 )
         {
@@ -71,7 +70,7 @@ void *sendOutput()
             pthread_mutex_unlock(&mutex);
             pthread_exit(NULL);
         }
-    
+    	sleep(1);
         pthread_mutex_unlock(&mutex);
     }
     pthread_exit(NULL);
