@@ -10,8 +10,6 @@
 
 #include "RS232.h"
 
-#define CHANNEL 1
-
 struct sockaddr_rc rem_addr = {0}, loc_addr = {0};
 pthread_mutex_t mutex;
 sem_t sem;
@@ -42,7 +40,7 @@ void main()
 
     bind(sockfd, (struct sockaddr *)&loc_addr, length_loc_addr);
 
-    listen(sockfd, CHANNEL);
+    listen(sockfd, 1);
 
     printf("Attente de client\n");
     while (1)
@@ -66,7 +64,7 @@ void *sendOutput()
         //pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
-        if (send(client, buffer, (size_t)strlen(buffer) + 1, 0) < 0)
+        if (send(sockfd, buffer, (size_t)strlen(buffer) + 1, 0) < 0)
             printf("Le client c'est déconnecter !\n");
 
         //pthread_mutex_unlock(&mutex);
