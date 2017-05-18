@@ -45,7 +45,7 @@ int main()
     printf("Attente de client\n");
     while (1);
     {
-        socketClient = accept(socketServer, (struct sockaddr *)&rem_addr, &length_rem_addr)
+        socketClient = accept(socketServer, (struct sockaddr *)&rem_addr, &length_rem_addr);
         ba2str(&rem_addr.rc_bdaddr, rc_addr);
         printf("Connexion recu de : %s\n", rc_addr);
 
