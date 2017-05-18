@@ -36,7 +36,7 @@ void main()
 
     loc_addr.rc_family = AF_BLUETOOTH;
     loc_addr.rc_bdaddr = *BDADDR_ANY;
-    loc_addr.rc_channel = CHANNEL;
+    loc_addr.rc_channel = 10;
 
     bind(sockfd, (struct sockaddr *)&loc_addr, length_loc_addr);
 
