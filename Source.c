@@ -43,8 +43,8 @@ int main(int argc , char *argv[])
     printf("Attente de client\n");
     while (socketClient = accept(socketServer, (struct sockaddr *)&clientAddr, &lengthClient) )
     {
-        ba2str(&rem_addr.rc_bdaddr, addr_device);
-        printf("Connexion recu de : %s\n", addr_device);
+        ba2str(&clientAddr.rc_bdaddr, addresseDevice);
+        printf("Connexion recu de : %s\n", addresseDevice);
 
         socketThread = malloc(1);
         *socketThread = socketClient;
