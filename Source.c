@@ -16,7 +16,7 @@ struct sockaddr_rc rem_addr = {0};
 pthread_mutex_t mutex;
 sem_t sem;
 char buffer[64] = {0};
-int sock;
+int sock, client;
 
 void *sendOutput();
 
@@ -26,7 +26,6 @@ void main()
     pthread_t Reception, Transmission;
     struct sockaddr_rc loc_addr = {0};
     char receive_addr[8] = {0};
-    int client;
     socklen_t length_rem_addr = sizeof(rem_addr);
     socklen_t length_loc_addr = sizeof(loc_addr);
 
