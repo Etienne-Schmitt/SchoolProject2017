@@ -59,6 +59,7 @@ int main(int argc , char *argv[])
 void *sendOutput(void *socketServer, char *buffer)
 {
     int sClient = *(int*)socketServer;
+    char data = *(char*)buffer;
 
     printf("Thread envoie crée !\n");
     while (sClient > 0)
@@ -66,7 +67,7 @@ void *sendOutput(void *socketServer, char *buffer)
         //pthread_mutex_lock(&mutex);
         //sem_wait(&sem);
 
-        if (send(sClient, buffer, sizeof(buffer), 0) < 0)
+        if (send(sClient, data, sizeof(data), 0) < 0)
             printf("Le client c'est déconnecter !\n");
 
         //pthread_mutex_unlock(&mutex);
