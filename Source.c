@@ -16,6 +16,7 @@ sem_t sem;
 int socketServer, socketClient, lengthClient;
 struct sockaddr_rc serverAddr, clientAddr;
 char buffer[64], addrDevice[8];
+bool status = false;
 
 void *sendOutput();
 
@@ -62,11 +63,16 @@ void *sendOutput()
     while (socketClient > 0)
     {
         //pthread_mutex_lock(&mutex);
-        //sem_wait(&sem);
+        sem_wait(&sem);
 
-        if (send(socketClient, buffer, sizeof(buffer), 0) < 0)
+        if ( (send(socketClient, buffer, sizeof(buffer), 0) < 0) && (status) )
+        {
+        	status=false
             printf("Le client c'est déconnecter !\n");
-
+            sleep(5);
+            pthread_exit(NULL);
+        }
+    
         //pthread_mutex_unlock(&mutex);
     }
     pthread_exit(NULL);
