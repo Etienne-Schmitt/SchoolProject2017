@@ -16,7 +16,7 @@ int main(int argc , char *argv[])
     pthread_t Reception, Transmission;
     pthread_mutex_t mutex;
     sem_t sem;
-azazaaza
+
 
     int socketServer, socketClient, lengthClient, *socketThread;
     struct sockaddr_rc serverAddr, clientAddr;
