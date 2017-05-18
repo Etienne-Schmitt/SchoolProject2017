@@ -6,8 +6,7 @@ void *readInput()
 {
     printf("Thread reception cree !\n");
     while (1) //Thread 1
-    {
-        pthread_mutex_lock(&mutex);
+    
 
         // Générateur de string aléatoire
 
@@ -24,8 +23,6 @@ void *readInput()
 
         sem_post(&sem);
         sleep(10);
-
-        pthread_mutex_unlock(&mutex);
     }
     pthread_exit(NULL);
 }
