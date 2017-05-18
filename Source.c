@@ -17,7 +17,7 @@ pthread_mutex_t mutex;
 sem_t sem;
 char buffer[64] = {0};
 int sock, client;
-char receive_addr[8] = {0};
+char rc_addr[8] = {0};
 
 socklen_t length_rem_addr = sizeof(rem_addr);
 socklen_t length_loc_addr = sizeof(loc_addr);
@@ -34,11 +34,11 @@ void main()
 
     pthread_create(&Reception, NULL, readInput, NULL);
 
+    sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+
     loc_addr.rc_family = AF_BLUETOOTH;
     loc_addr.rc_bdaddr = *BDADDR_ANY;
     loc_addr.rc_channel = CHANNEL;
-
-    sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 
     bind(sock, (struct sockaddr *)&loc_addr, length_loc_addr);
 
@@ -59,18 +59,17 @@ void main()
 void *sendOutput()
 {
     printf("Thread envoie cree !\n");
+    ba2str(&rem_addr.rc_bdaddr, rc_addr);
+    printf("Connexion recu de : %s\n", rc_addr);
     while (client > 0)
     {
-        ba2str(&rem_addr.rc_bdaddr, receive_addr);
-        printf("Connexion recu de : %s\n", receive_addr);
-
-        pthread_mutex_lock(&mutex);
+        //pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
         if (send(client, buffer, (size_t)strlen(buffer) + 1, 0) < 0)
             printf("Le client c'est déconnecter !\n");
 
-        pthread_mutex_unlock(&mutex);
+        //pthread_mutex_unlock(&mutex);
     }
     pthread_exit(NULL);
 }
