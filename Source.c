@@ -16,7 +16,6 @@ sem_t sem;
 int socketServer, socketClient, lengthClient;
 struct sockaddr_rc serverAddr, clientAddr;
 char buffer[64], addrDevice[8];
-bool status = false;
 
 void *sendOutput();
 
