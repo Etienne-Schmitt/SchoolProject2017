@@ -29,7 +29,7 @@ void main()
     socklen_t length_rem_addr = sizeof(rem_addr);
     socklen_t length_loc_addr = sizeof(loc_addr);
 
-    printf("Starting Bluetooth Server\n");
+    printf("Démarrage Server Bluetooth\n");
     sem_init(&sem, 0, 0);
     pthread_mutex_init(&mutex, NULL);
 
@@ -43,15 +43,12 @@ void main()
 
     bind(sock, (struct sockaddr *)&loc_addr, length_loc_addr);
 
+    printf("Attente de client\n");
     while (1)
     {
         listen(sock, CHANNEL);
 
         client = accept(sock, (struct sockaddr *)&rem_addr, &length_rem_addr);
-
-        // Conversion de l'adresse BT en string (char array) dans receive_addr
-        ba2str(&rem_addr.rc_bdaddr, receive_addr);
-        printf("Connexion recu de : %s\n", receive_addr);
 
         pthread_create(&Transmission, NULL, sendOutput, NULL);
     }
@@ -62,13 +59,16 @@ void main()
 
 void *sendOutput()
 {
-    while (client)
+    while (client > 0)
     {
+        ba2str(&rem_addr.rc_bdaddr, receive_addr);
+        printf("Connexion recu de : %s\n", receive_addr);
+
         pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
         if (send(client, buffer, (size_t)strlen(buffer) + 1, 0) < 0)
-            printf("Le client n'est pas connecter !\n");
+            printf("Le client c'est déconnecter !\n");
 
         pthread_mutex_unlock(&mutex);
     }
