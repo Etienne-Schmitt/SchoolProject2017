@@ -22,7 +22,7 @@ socklen_t length_loc_addr = sizeof(loc_addr);
 
 void *sendOutput();
 
-void main()
+int main()
 {
     printf("Démarrage Server Bluetooth\n");
     pthread_t Reception, Transmission;
@@ -55,6 +55,7 @@ void main()
 
     close(socketClient);
     close(socketServer);
+    return 0;
 }
 
 void *sendOutput()
