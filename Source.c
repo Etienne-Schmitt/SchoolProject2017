@@ -61,7 +61,7 @@ void *sendOutput()
     while (1)
     {
         pthread_mutex_lock(&mutex);
-        sem_wait (&sem)
+        sem_wait (&sem);
 
         if ( send(socketClient, buffer, sizeof(buffer), 0) < 0 )
         {
