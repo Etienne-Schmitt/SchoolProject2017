@@ -10,7 +10,7 @@
 
 #include "RS232.h"
 
-#define CHANNEL 10
+#define CHANNEL 1
 
 struct sockaddr_rc rem_addr = {0}, loc_addr = {0};
 pthread_mutex_t mutex;
@@ -21,6 +21,7 @@ char receive_addr[8] = {0};
 
 socklen_t length_rem_addr = sizeof(rem_addr);
 socklen_t length_loc_addr = sizeof(loc_addr);
+
 void *sendOutput();
 
 void main()
@@ -28,7 +29,6 @@ void main()
     printf("Démarrage Server Bluetooth\n");
     pthread_t Reception, Transmission;
 
-    
     sem_init(&sem, 0, 0);
     pthread_mutex_init(&mutex, NULL);
 
@@ -36,14 +36,13 @@ void main()
 
     loc_addr.rc_family = AF_BLUETOOTH;
     loc_addr.rc_bdaddr = *BDADDR_ANY;
-    loc_addr.rc_channel = (uint8_t)CHANNEL;
+    loc_addr.rc_channel = CHANNEL;
 
     sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 
     bind(sock, (struct sockaddr *)&loc_addr, length_loc_addr);
 
     listen(sock, CHANNEL);
-
 
     printf("Attente de client\n");
     while (1)
@@ -59,6 +58,7 @@ void main()
 
 void *sendOutput()
 {
+    printf("Thread envoie cree !\n");
     while (client > 0)
     {
         ba2str(&rem_addr.rc_bdaddr, receive_addr);

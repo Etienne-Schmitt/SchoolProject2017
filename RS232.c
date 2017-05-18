@@ -4,6 +4,7 @@
 
 void *readInput()
 {
+    printf("Thread reception cree !\n");
     while (1) //Thread 1
     {
         pthread_mutex_lock(&mutex);
