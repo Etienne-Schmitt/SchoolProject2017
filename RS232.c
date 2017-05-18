@@ -7,8 +7,8 @@ void *readInput()
     printf("Thread reception crée !\n");
     while (1) //Thread 1
     {
+        memset(buffer, 0, sizeof(bufferbuf));
         // Générateur de string aléatoire
-
         srand(time(NULL));
         for (int i = 0; i < 8; ++i)
         {

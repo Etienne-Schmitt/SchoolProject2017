@@ -17,9 +17,6 @@ char buffer[64] = {0};
 int socketServer, socketClient;
 char addr_device[8] = {0};
 
-unsigned int length_rem_addr = sizeof(rem_addr);
-unsigned int length_loc_addr = sizeof(loc_addr);
-
 void *sendOutput();
 
 int main()
@@ -36,12 +33,13 @@ int main()
 
     loc_addr.rc_family = AF_BLUETOOTH;
     loc_addr.rc_bdaddr = *BDADDR_ANY;
-    loc_addr.rc_channel = 10;
+    loc_addr.rc_channel = 1;
 
-    bind(socketServer, (struct sockaddr *)&loc_addr, length_loc_addr);
+    bind(socketServer, (struct sockaddr *)&loc_addr, sizeof(loc_addr));
 
     listen(socketServer, 1);
 
+    unsigned int length_rem_addr = sizeof(rem_addr);
     printf("Attente de client\n");
     while (1);
     {
