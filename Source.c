@@ -64,10 +64,9 @@ void *sendOutput()
         //pthread_mutex_lock(&mutex);
         sem_wait(&sem);
 
-        if ( (send(socketClient, buffer, sizeof(buffer), 0) < 0) && (status) )
+        if ( send(socketClient, buffer, sizeof(buffer), 0) < 0 )
         {
-        	status=false
-            printf("Le client c'est déconnecter !\n");
+            printf("Le client est déconnecter !\n");
             sleep(5);
             pthread_exit(NULL);
         }
