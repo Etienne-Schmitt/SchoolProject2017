@@ -25,9 +25,10 @@ void *sendOutput();
 
 void main()
 {
+    printf("Démarrage Server Bluetooth\n");
     pthread_t Reception, Transmission;
 
-    printf("Démarrage Server Bluetooth\n");
+    
     sem_init(&sem, 0, 0);
     pthread_mutex_init(&mutex, NULL);
 
@@ -41,11 +42,12 @@ void main()
 
     bind(sock, (struct sockaddr *)&loc_addr, length_loc_addr);
 
+    listen(sock, CHANNEL);
+
+
     printf("Attente de client\n");
     while (1)
     {
-        listen(sock, CHANNEL);
-
         client = accept(sock, (struct sockaddr *)&rem_addr, &length_rem_addr);
 
         pthread_create(&Transmission, NULL, sendOutput, NULL);
