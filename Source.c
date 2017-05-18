@@ -7,62 +7,66 @@
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
-
 #include "RS232.h"
 
-struct sockaddr_rc rem_addr = {0}, loc_addr = {0};
-pthread_mutex_t mutex;
-sem_t sem;
-char buffer[64] = {0};
-int socketServer, socketClient;
-char addr_device[8] = {0};
+void *sendOutput(void *socketServer, char *buffer);
 
-void *sendOutput();
-
-int main()
+int main(int argc , char *argv[])
 {
-    printf("Démarrage Server Bluetooth\n");
     pthread_t Reception, Transmission;
+    pthread_mutex_t mutex;
+    sem_t sem;
+azazaaza
+
+    int socketServer, socketClient, lengthClient, *socketThread;
+    struct sockaddr_rc serverAddr, clientAddr;
+    char buffer[64], addresseDevice[8];
 
     sem_init(&sem, 0, 0);
     pthread_mutex_init(&mutex, NULL);
+
+    printf("Démarrage Server Bluetooth\n");
 
     pthread_create(&Reception, NULL, readInput, NULL);
 
     socketServer = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 
-    loc_addr.rc_family = AF_BLUETOOTH;
-    loc_addr.rc_bdaddr = *BDADDR_ANY;
-    loc_addr.rc_channel = 1;
+    serverAddr.rc_family = AF_BLUETOOTH;
+    serverAddr.rc_bdaddr = *BDADDR_ANY;
+    serverAddr.rc_channel = 1;
 
-    bind(socketServer, (struct sockaddr *)&loc_addr, sizeof(loc_addr));
+    bind(socketServer, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
 
     listen(socketServer, 1);
 
-    unsigned int length_rem_addr = sizeof(rem_addr);
+    lengthClient = sizeof(clientAddr);
     printf("Attente de client\n");
-    while (1);
+    while (socketClient = accept(socketServer, (struct sockaddr *)&clientAddr, &lengthClient) )
     {
-        socketClient = accept(socketServer, (struct sockaddr *)&rem_addr, &length_rem_addr);
         ba2str(&rem_addr.rc_bdaddr, addr_device);
         printf("Connexion recu de : %s\n", addr_device);
 
+        socketThread = malloc(1);
+        *socketThread = socketClient;
         pthread_create(&Transmission, NULL, sendOutput, NULL);
     }
+    printf("Connexion refusée, arret en cours...\n");
     close(socketClient);
     close(socketServer);
-    return 0;
+    return -1;
 }
 
-void *sendOutput()
+void *sendOutput(void *socketServer, char *buffer)
 {
+    int sClient = *(int*)socketServer;
+
     printf("Thread envoie crée !\n");
-    while (socketClient > 0)
+    while (sClient > 0)
     {
         //pthread_mutex_lock(&mutex);
-        sem_wait(&sem);
+        //sem_wait(&sem);
 
-        if (send(socketClient, buffer, sizeof(buffer), 0) < 0)
+        if (send(sClient, buffer, sizeof(buffer), 0) < 0)
             printf("Le client c'est déconnecter !\n");
 
         //pthread_mutex_unlock(&mutex);
