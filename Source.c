@@ -15,10 +15,10 @@ pthread_mutex_t mutex;
 sem_t sem;
 char buffer[64] = {0};
 int socketServer, socketClient;
-char rc_addr[8] = {0};
+char addr_device[8] = {0};
 
-socklen_t length_rem_addr = sizeof(rem_addr);
-socklen_t length_loc_addr = sizeof(loc_addr);
+unsigned int length_rem_addr = sizeof(rem_addr);
+unsigned int length_loc_addr = sizeof(loc_addr);
 
 void *sendOutput();
 
@@ -46,8 +46,8 @@ int main()
     while (1);
     {
         socketClient = accept(socketServer, (struct sockaddr *)&rem_addr, &length_rem_addr);
-        ba2str(&rem_addr.rc_bdaddr, rc_addr);
-        printf("Connexion recu de : %s\n", rc_addr);
+        ba2str(&rem_addr.rc_bdaddr, addr_device);
+        printf("Connexion recu de : %s\n", addr_device);
 
         pthread_create(&Transmission, NULL, sendOutput, NULL);
     }
