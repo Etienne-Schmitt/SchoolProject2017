@@ -25,7 +25,7 @@ int main(int argc , char *argv[])
 	sem_init(&sem, 0, 0);
 	pthread_mutex_init(&mutex, NULL);
 
-	printf("Démarrage Server Bluetooth\n");
+	printf(GRN "Démarrage Server Bluetooth\n" RESET);
 
 	pthread_create(&Reception, NULL, readInput, NULL);
 
@@ -40,19 +40,17 @@ int main(int argc , char *argv[])
 	listen(socketServer, 1);
 
 	lengthClient = sizeof(clientAddr);
-	printf("Attente de client\n");
+	printf(YEL "Attente de client...\n" RESET);
 
 
-	while (socketClient = accept(socketServer, (struct sockaddr *)&clientAddr, &lengthClient))
+	do {
 
-	{
-		ba2str(&clientAddr.rc_bdaddr, addrDevice);
-		printf("Connexion recu de : %s\n", addrDevice);
-
+		socketClient = accept(socketServer, (struct sockaddr *)&clientAddr, &lengthClient);
 
 		pthread_create(&Transmission, NULL, sendOutput, NULL);
-	}
-	printf("Connexion refusée, arret en cours...\n");
+
+	} while (socketClient);
+	printf(RED "Connexion refusée, arret en cours...\n" RESET);
 	close(socketClient);
 	close(socketServer);
 	return -1;
@@ -60,17 +58,18 @@ int main(int argc , char *argv[])
 
 void *sendOutput()
 {
+	ba2str(&clientAddr.rc_bdaddr, addrDevice);
+	printf(GRN "Connexion recu de : %s\n" RESET, addrDevice);
 
-	printf("Thread envoie crée !\n");
+	printf(GRN "Thread envoie crée !\n" RESET);
 	while (1)
 	{
 		pthread_mutex_lock(&mutex);
 		sem_wait (&sem);
 
-		if ( send(socketClient, buffer, sizeof(buffer), 0) < 0 )
+		if (send(socketClient, buffer, sizeof(buffer), 0) < 0 )
 		{
-			printf("Le client s'est déconnecter !\n");
-			sleep(5);
+			printf(RED "Le client s'est déconnecter ! Thread envoie Detruit\n" RESET);
 			pthread_mutex_unlock(&mutex);
 			pthread_exit(NULL);
 		}
