@@ -20,8 +20,9 @@ void *readInput()
 
 		printf(YEL "Entrée= %s\n" RESET, buffer);
 
-		sem_post(&sem);
 		pthread_mutex_unlock(&mutex);
+		sem_post(&sem);
+
 
 		sleep(5);
 	}
