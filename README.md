@@ -2,5 +2,4 @@
 The project i create for my school
 
 
-
-I know it's not very efficient, but I'm not allowed to put the Thread-function outside of RS232.c.... (School secrets....)
+Just need to change in RS232.C my random char[] generator by a data input from other students
