@@ -1,6 +1,5 @@
 #include "RS232.h"
 #include <time.h>
-#include <stdlib.h>
 
 void *readInput()
 {

@@ -7,12 +7,14 @@
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
+
 #include "RS232.h"
 
 pthread_t Reception, Transmission;
 pthread_mutex_t mutex;
 sem_t semEnvoie;
 
+int port = 1;
 int socketServer, socketClient;
 socklen_t lengthClient;
 struct sockaddr_rc serverAddr, clientAddr;
@@ -29,11 +31,12 @@ int main(int argc , char *argv[])
 
 	pthread_create(&Reception, NULL, readInput, NULL);
 
+
 	socketServer = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 
 	serverAddr.rc_family = AF_BLUETOOTH;
 	serverAddr.rc_bdaddr = *BDADDR_ANY;
-	serverAddr.rc_channel = 1;
+	serverAddr.rc_channel = port;
 
 	bind(socketServer, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
 
