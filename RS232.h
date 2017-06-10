@@ -18,7 +18,7 @@
 
 
 extern char buffer[64];
-extern sem_t sem;
+extern sem_t semEnvoie;
 extern pthread_mutex_t mutex;
 
 void *readInput();

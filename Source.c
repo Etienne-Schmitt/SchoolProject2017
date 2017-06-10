@@ -11,7 +11,7 @@
 
 pthread_t Reception, Transmission;
 pthread_mutex_t mutex;
-sem_t sem;
+sem_t semEnvoie;
 
 int socketServer, socketClient;
 socklen_t lengthClient;
@@ -22,7 +22,7 @@ void *sendOutput();
 
 int main(int argc , char *argv[])
 {
-	sem_init(&sem, 0, 0);
+	sem_init(&semEnvoie, 0, 0);
 	pthread_mutex_init(&mutex, NULL);
 
 	printf(GRN "Démarrage Server Bluetooth\n" RESET);
@@ -64,7 +64,7 @@ void *sendOutput()
 	printf(GRN "Thread envoie crée !\n" RESET);
 	while (1)
 	{
-		sem_wait (&sem);
+		sem_wait (&semEnvoie);
 		pthread_mutex_lock(&mutex);
 	
 
@@ -74,7 +74,6 @@ void *sendOutput()
 			pthread_mutex_unlock(&mutex);
 			pthread_exit(NULL);
 		}
-		sleep(1);
 		pthread_mutex_unlock(&mutex);
 	}
 	pthread_exit(NULL);

@@ -4,7 +4,9 @@
 
 void *readInput()
 {
-	printf(GRN "Thread reception crée !\n" RESET);	while (1) //Thread 1
+	printf(GRN "Thread reception crée !\n" RESET);	
+	
+	while (1) //Thread 1
 	{
 		pthread_mutex_lock(&mutex);
 
@@ -21,8 +23,7 @@ void *readInput()
 		printf(YEL "Entrée= %s\n" RESET, buffer);
 
 		pthread_mutex_unlock(&mutex);
-		sem_post(&sem);
-
+		sem_post(&semEnvoie);
 
 		sleep(5);
 	}
