@@ -17,7 +17,7 @@
 #define RESET "\x1B[0m"
 
 
-extern char buffer[1024];
+extern char buffer[64];
 extern sem_t sem;
 extern pthread_mutex_t mutex;
 

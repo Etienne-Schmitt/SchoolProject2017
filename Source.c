@@ -14,11 +14,9 @@ pthread_mutex_t mutex;
 sem_t sem;
 
 int socketServer, socketClient;
-int port = 1;
 socklen_t lengthClient;
 struct sockaddr_rc serverAddr, clientAddr;
-char buffer[1024] = { 0 };
-char addrDevice[8];
+char buffer[64], addrDevice[8];
 
 void *sendOutput();
 
@@ -31,33 +29,27 @@ int main(int argc , char *argv[])
 
 	pthread_create(&Reception, NULL, readInput, NULL);
 
+	socketServer = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+
 	serverAddr.rc_family = AF_BLUETOOTH;
 	serverAddr.rc_bdaddr = *BDADDR_ANY;
-	serverAddr.rc_channel = (uint8_t) port;
-
-	socketServer = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+	serverAddr.rc_channel = 1;
 
 	bind(socketServer, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
 
-	listen(socketServer, 10);
+	listen(socketServer, 1);
 
 	lengthClient = sizeof(clientAddr);
 	printf(YEL "Attente de client...\n" RESET);
 
-	while (1)
-	{
+
+	do {
 
 		socketClient = accept(socketServer, (struct sockaddr *)&clientAddr, &lengthClient);
 
 		pthread_create(&Transmission, NULL, sendOutput, NULL);
 
-	}
-	if (socketClient > 0)
-	{
-		close(socketClient);
-		close(socketServer);
-		return 0;
-	}
+	} while (socketClient);
 	printf(RED "Connexion refusée, arret en cours...\n" RESET);
 	close(socketClient);
 	close(socketServer);
@@ -74,7 +66,7 @@ void *sendOutput()
 	{
 		sem_wait (&sem);
 		pthread_mutex_lock(&mutex);
-		
+	
 
 		if (send(socketClient, buffer, sizeof(buffer), 0) < 0 )
 		{
