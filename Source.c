@@ -29,15 +29,15 @@ int main(int argc , char *argv[])
 
 	pthread_create(&Reception, NULL, readInput, NULL);
 
-	socketServer = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
-
 	serverAddr.rc_family = AF_BLUETOOTH;
 	serverAddr.rc_bdaddr = *BDADDR_ANY;
 	serverAddr.rc_channel = 1;
 
+	socketServer = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+
 	bind(socketServer, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
 
-	listen(socketServer, 1);
+	listen(socketServer, 10);
 
 	lengthClient = sizeof(clientAddr);
 	printf(YEL "Attente de client...\n" RESET);
@@ -50,6 +50,12 @@ int main(int argc , char *argv[])
 		pthread_create(&Transmission, NULL, sendOutput, NULL);
 
 	} while (socketClient);
+	if (socketClient > 0)
+	{
+		close(socketClient);
+		close(socketServer);
+		return 0;
+	}
 	printf(RED "Connexion refusée, arret en cours...\n" RESET);
 	close(socketClient);
 	close(socketServer);
