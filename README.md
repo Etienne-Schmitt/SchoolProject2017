@@ -3,9 +3,9 @@
 
 Ce serveur utilise 2 thread :
 
-Réception
-
-Émission
+#### Réception
+et
+#### Émission
 
 Ces deux ont chacun leur fonction propre :
 
