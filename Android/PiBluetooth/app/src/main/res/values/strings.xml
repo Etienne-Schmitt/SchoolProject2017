@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Pi Bluetooth</string>
+    <string name="rawType">Raw</string>
+    <string name="detailedType">Detailed</string>
+    <string name="btnConnectionString">Connection</string>
+    <string name="btnDisconnectionString">Disconnection</string>
+    <string name="switchState">Switch for detailed information.</string>
+    <string name="ConnectError">Error during the connection.</string>
+    <string name="RawChosen">You select Raw information.</string>
+    <string name="DetailedChosen">You select Detailed information.</string>
+    <string name="toggleButton">ToggleButton</string>
+    <string name="deviceNotFound">Raspberry not Found.</string>
+    <string name="deviceFound">Raspberry already paired.</string>
+    <string name="listBluetoothDevice">There is the list of all the devices you already paired, if your\'s didn\'t appear, please pair it with the build-in feature in Android.</string>
+    <string name="btDeviceFound">Bluetooth device found</string>
+    <string name="state">You selected:</string>
+    <string name="btOpen">Bluetooth Opened</string>
+    <string name="btClosed">Bluetooth Closed</string>
+    <string name="freeze">Freeze</string>
+    <string name="unfreeze">Unfreeze</string>
+    <string name="btNull">Bluetooth not supported on this device</string>
+    <string name="btNotEnableLeave">Bluetooth not enable</string>
+    <string name="no_bt_support">Your device doesn\'t support Bluetooth.</string>
+    <string name="msg_not_connected">not connected</string>
+    <string name="msg_connecting">connecting...</string>
+    <string name="msg_connected">connected</string>
+    <string name="btConnectedTo">Connected successfully to</string>
+    <string name="disconnected">was diconnected</string>
+    <string name="checksumOK">No error in checksum</string>
+    <string name="checksumFail">Checksum error</string>
+    <string name="checksumCorrect">Correct checksum:</string>
+    <string name="badtrame">Invalid data</string>
+
+</resources>
