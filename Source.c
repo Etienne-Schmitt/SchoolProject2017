@@ -27,6 +27,8 @@ int main(int argc , char *argv[])
 	sem_init(&semEnvoie, 0, 0);
 	pthread_mutex_init(&mutex, NULL);
 
+	printf(RED "Soyez sure d'avoir crée l'enregistrement sdp comme un port série ! (voir README)\n" RESET);
+
 	printf(GRN "Démarrage Server Bluetooth\n" RESET);
 
 	pthread_create(&Reception, NULL, readInput, NULL);
