@@ -17,7 +17,7 @@ void *readInput()
 		pthread_mutex_unlock(&mutex);
 		sem_post(&semEnvoie);
 
-		sleep(5);
+		sleep(1);
 	}
 	pthread_exit(NULL);
 }
