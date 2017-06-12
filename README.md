@@ -12,7 +12,7 @@ Récéption : Est chargé de stocké les données recu
 Émission  : Est chargé d'envoyer les données en bluetooth
 
 
-## Attention !!
+### Attention !!
 
 Il est obligatoire de configurer votre daemon SDP pour qu'il puisse proposer la connection en port série.
 
@@ -26,11 +26,12 @@ une liste non exhaustive s'affiche, et chercher l'existence de cette partie :
 
 ![alt text](https://puu.sh/wi3Ad.jpg)
 
-
-Certaines informations (Version, RecHandle peuvent changer !)
+# Certaines informations (Version, RecHandle peuvent changer !)
 
 
 Si cette ligne n'éxiste pas il faut la crée avec la commande :
-(sudo) sdptool add [--channel=CHANNEL] service 
+```
+(sudo) sdptool add [--channel=CHANNEL] service
+```
 
 La partie entre crochet n'est pas obligatoire, sauf si vous voulez utiliser un autre channel que le channel 1 !
